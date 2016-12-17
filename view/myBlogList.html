@@ -1,0 +1,29 @@
+<div ng-controller="myBlogListController">
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/books.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>My Blog</h1>
+                        <hr class="small">
+                        <span class="subheading"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <ul class="pager" style="padding-right:10px;">
+                <li class="next">
+                    <a ui-sref="add-blog">Add New Blog →</a>
+                </li>
+            </ul>
+            <div ng-include="'view/home-post-list.html'"></div>
+        </div>
+    </div>
+    <hr>
+</div>

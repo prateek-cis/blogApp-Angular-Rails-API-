@@ -1,0 +1,33 @@
+<!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+<div class="col-md-8">
+    <div ng-if="blogList.length == 0">
+        <h2>No Blogs yet!</h2>
+    </div>
+    <div ng-repeat="blog in blogList | orderBy: blog.created_at: true | limitTo: numOfBlogs ">
+        <div class="post-preview">
+            <a ui-sref="blogDetail({blogId: blog.id})">
+                <h2 class="post-title">{{blog.title}}</h2>
+            </a>
+            <p class="post-meta">Posted by <a href="javascript:void(0)">{{blog.user.first_name}} {{blog.user.last_name}}</a> on {{blog.created_at | convertDate}} &nbsp;&nbsp;
+                <a ui-sref="edit-blog({blogId: blog.id})" ng-if="editVisible">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <angular-smartconfirm class="delete-directive" ng-if="editVisible" confirm="deleteSingleBlog(blog)"><span class="glyphicon glyphicon-trash"></span></angular-smartconfirm>
+            </p>
+        </div>
+        <hr>
+    </div>
+    <!-- Pager -->
+    <ul class="pager">
+        <li class="next">
+            <a ng-click="nextPosts()" ng-class="(numOfBlogs >= blogList.length) ? 'disable-post-btn': '' ">Older Posts &rarr;</a>
+        </li>
+    </ul>
+</div>
+<div class="col-md-4">
+    <ul class="plunker-taglist">
+        <li ng-repeat="tag in allTags">
+            <a href="javascript:void(0)" ng-class="checkIsSelect(tag.name)" ng-click="selectDeselect(tag.name);">{{tag.name}}</a>
+        </li>
+    </ul>
+</div>

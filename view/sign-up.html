@@ -1,0 +1,64 @@
+<div ng-controller="signUpController">
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/sign-up.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="page-heading">
+                        <h1>Sign-up</h1>
+                        <hr class="small">
+                        <!-- <span class="subheading">Have questions? I have answers (maybe).</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- <notification alert-data="notification"></notification> -->
+                <p>Sign Up</p>
+                <form name="signUp" novalidate ng-submit="submitSignUpForm()">
+                    <div class="row control-group" ng-class="{ 'has-error' : signUp.fname.$invalid && !signUp.fname.$pristine }">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>First Name</label>
+                            <input type="text" name="fname" class="form-control" placeholder="First Name" ng-model="fname" required>
+                            <p ng-show="signUp.fname.$invalid && !signUp.fname.$pristine" class="help-block">Enter a valid First Name.</p>
+                        </div>
+                    </div>
+                    <div class="row control-group" ng-class="{ 'has-error' : signUp.lname.$invalid && !signUp.lname.$pristine }">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Last Name</label>
+                            <input type="text" name="lname" class="form-control" placeholder="Last Name" ng-model="lname" required>
+                            <p ng-show="signUp.lname.$invalid && !signUp.lname.$pristine" class="help-block">Enter a valid Last Name.</p>
+                        </div>
+                    </div>
+                    <div class="row control-group" ng-class="{ 'has-error' : signUp.email.$invalid && !signUp.email.$pristine }">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Email Address</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email Address" ng-model="email" required>
+                            <p ng-show="signUp.email.$invalid && !signUp.email.$pristine" class="help-block">Enter a valid email.</p>
+                        </div>
+                    </div>
+                    <div class="row control-group" ng-class="{ 'has-error' : signUp.password.$invalid && !signUp.password.$pristine }">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="password" class="form-control" ng-model="password" ng-minlength="8" required ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/">
+                            <p ng-show="signUp.password.$error.pattern" class="help-block">Password should be atleast 8 characters long and should contain one number,one character and one special character.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <button type="submit" class="btn btn-default" ng-disabled="signUp.$invalid">Sign Up <i class="fa fa-cog fa-spin" ng-if="isBusy"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>

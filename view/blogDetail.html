@@ -1,0 +1,59 @@
+<div ng-controller="blogDetailController">
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <!-- <loading></loading> -->
+    <header class="intro-header" style="background-image: url('{{singleBlog.avatar}}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>{{singleBlog.name}}</h1>
+                        <span class="meta">Posted by <a href="#">{{singleBlog.postedBy}}</a> on <span class="format-date">{{singleBlog.postedAt | convertDate}}</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div ng-bind-html="singleBlog.detail"></div>
+                    <!-- <div class="custom-tags" ng-if="singleBlog.tags.length">
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                        <span ng-repeat="tags in singleBlog.tags">
+                            {{tags.name}}
+                        </span>
+                    </div> -->
+                    <ul class="plunker-taglist" ng-if="singleBlog.tags.length">
+                        <li ng-repeat="tags in singleBlog.tags">
+                            <a href="javascript:void(0)">{{tags.name}}</a>
+                        </li>
+                    </ul>
+                    <!-- <notification alert-data="notification"></notification> -->
+                    <div class="well" ng-if="$parent.isLogin == true">
+                        <h4>Leave a Comment:</h4>
+                        <form role="form" name="commentForm" novalidate ng-submit="submitCommentForm()">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="3" placeholder="Please type comment here" ng-model="commentText" required name="commentText"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid">Submit <i class="fa fa-cog fa-spin" ng-if="isBusy"></i></button>
+                        </form>
+                    </div>
+                    <div class="media" ng-repeat="comments in singleBlogComment">
+                        <a class="pull-left" href="">
+                            <img class="media-object" height="50" width="50" ng-src="{{ comments.user.image || 'img/user.png' }}" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{comments.user.first_name}} {{comments.user.last_name}}
+                                    <small>{{comments.created_at | convertDate}}</small>
+                            </h4> {{comments.body}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <hr>
+</div>

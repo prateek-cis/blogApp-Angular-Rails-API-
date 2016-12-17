@@ -1,0 +1,77 @@
+<div ng-controller="editBlogController">
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Edit Blog</h1>
+                        <hr class="small">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- <loading></loading> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <!-- <notification alert-data="notification"></notification> -->
+                <p>
+                    <p>
+                        <form name="blogForm" novalidate ng-submit="submitFormBlog()">
+                            <div class="row control-group" ng-class="{ 'has-error' : blogForm.blogname.$invalid && !blogForm.blogname.$pristine }">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label>Image</label>
+                                    <div class="fileUpload btn">
+                                        <span><img width="150" ng-src="{{ thumbnail || 'img/no-image-available.png' }}" alt="" /></span>
+                                        <input class="upload" type="file" name="blogImage" ng-model="blogImage" onchange="angular.element(this).scope().fileNameChanged(this)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row control-group" ng-class="{ 'has-error' : blogForm.blogname.$invalid && !blogForm.blogname.$pristine }">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label>Name</label>
+                                    <input type="text" name="blogname" placeholder="Blog Name" class="form-control" ng-model="blog.title" ng-minlength="10" required>
+                                    <p ng-show="blogForm.blogname.$invalid && !blogForm.blogname.$pristine" class="help-block">Enter a Blog Name.</p>
+                                    <p ng-show="blogForm.blogname.$error.minlength" class="help-block">Blog Name is too short.</p>
+                                </div>
+                            </div>
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <h4>Detail</h4>
+                                    <div text-angular ng-model="blog.body" name="blogdetail" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around"></div>
+                                    <p ng-show="blogForm.blogdetail.$invalid && !blogForm.blogdetail.$pristine" class="help-block">Enter a Blog Detail.</p>
+                                </div>
+                            </div>
+
+<!--                             <div class="row">
+                                <div class="col-sm-12">
+                                    <h3>Editor demo</h3>
+                                    <div text-angular ng-model="blog.body" name="demo-editor" ta-text-editor-class="clearfix border-around" ta-html-editor-class="border-around"></div>
+                                </div>
+                            </div> -->
+                            <br>
+                            <div class="row control-group">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label>Tags</label>
+                                    <tags-input ng-model="tags" add-on-paste="true" add-from-autocomplete-only="false" display-property="name">
+                                        <auto-complete source="loadTags($query)"></auto-complete>
+                                    </tags-input>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="success"></div>
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <button type="submit" class="btn btn-default" ng-disabled="blogForm.$invalid">Save Blog <i class="fa fa-cog fa-spin" ng-if="isBusy"></i></button>&nbsp;&nbsp;
+                                    <button class="btn btn-default" ui-sref="my-blog"> back</button>
+                                </div>
+                            </div>
+                        </form>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>

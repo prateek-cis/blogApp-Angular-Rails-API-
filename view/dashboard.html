@@ -1,0 +1,109 @@
+<div ng-controller="dashboardController">
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/profile.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1></h1>
+                        <hr class="small">
+                        <span class="subheading"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="col-md-3">
+            <h3>Menu</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="{{data[1]}}"><a href="javascript:void(0);" ng-click="setActiveTab(1)">Profile</a></li>
+                <li class="{{data[2]}}"><a href="javascript:void(0);" ng-click="setActiveTab(2)">Change Password</a></li>
+                <!-- <li><a href="javascript:void(0);" ng-click="setActiveTab(3)">Menu 3</a></li> -->
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div ng-show="data[1] == 'active'">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>Manage Profile</p>
+                    <div id="kv-avatar-errors-2" class="center-block" style="width:800px;display:none"></div>
+                    <div class="fileUpload btn userProfile">
+                        <span><img ng-src="{{ thumbnail || 'img/user.png' }}" alt="" /></span>
+                        <input class="upload" type="file" name="blogImage" ng-model="blogImage" onchange="angular.element(this).scope().fileNameChanged(this)" />
+                    </div>
+                    <!-- include other inputs if needed and include a form submit (save) button -->
+                    <form name="profileUpdation" novalidate ng-submit="submitprofileUpdationForm()">
+                        <div class="row control-group" ng-class="{ 'has-error' : profileUpdation.firstName.$invalid && !profileUpdation.firstName.$pristine }">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>First Name</label>
+                                <input type="text" name="firstName" placeholder="First Name" class="form-control" ng-model="firstName" ng-minlength="3" required>
+                                <p ng-show="profileUpdation.firstName.$error.minlength" class="help-block">First Name is too short.</p>
+                            </div>
+                        </div>
+                        <div class="row control-group" ng-class="{ 'has-error' : profileUpdation.lastName.$invalid && !profileUpdation.lastName.$pristine }">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Last Name</label>
+                                <input type="text" name="lastName" placeholder="Last Name" class="form-control" ng-model="lastName" ng-minlength="3" required>
+                                <p ng-show="profileUpdation.lastName.$error.minlength" class="help-block">Last Name is too short.</p>
+                            </div>
+                        </div>
+                        <!--                         <div class="row control-group" ng-class="{ 'has-error' : profileUpdation.email.$invalid && !profileUpdation.email.$pristine }">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Email</label>
+                                <input type="email" name="email" placeholder="Email" class="form-control" ng-model="email" ng-minlength="3" required>
+                                <p ng-show="profileUpdation.email.$error" class="help-block">Email is invalid.</p>
+                            </div>
+                        </div> -->
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-default" ng-disabled="profileUpdation.$invalid">Update <i class="fa fa-cog fa-spin" ng-if="isBusy"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div ng-show="data[2] == 'active'">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>Change Password</p>
+                    <form name="changePasswordForm" novalidate ng-submit="submitchangePasswordForm()">
+                        <!-- <div class="row control-group" ng-class="{ 'has-error' : changePasswordForm.oldPassword.$invalid && !changePasswordForm.oldPassword.$pristine }">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Old Password</label>
+                                <input type="password" name="oldPassword" class="form-control" placeholder="Old Password" ng-model="oldPassword" required>
+                                <p ng-show="changePasswordForm.oldPassword.$invalid && !changePasswordForm.oldPassword.$pristine" class="help-block">Enter a Old Password.</p>
+                            </div>
+                        </div> -->
+
+                        <div class="row control-group" ng-class="{ 'has-error' : changePasswordForm.nPassword.$invalid && !changePasswordForm.nPassword.$pristine }">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>New Password</label>
+                                <input type="password" name="nPassword" placeholder="New Password" class="form-control" ng-model="nPassword" ng-minlength="8" required ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/">
+                                <p ng-show="changePasswordForm.nPassword.$error.pattern" class="help-block">Password should be atleast 8 characters long and should contain one number,one character and one special character.</p>
+                            </div>
+                        </div>
+                        <div class="row control-group" ng-class="{ 'has-error' : (changePasswordForm.cPassword.$invalid && !changePasswordForm.cPassword.$pristine) || (changePasswordForm.cPassword.$viewValue !== changePasswordForm.nPassword.$viewValue) }">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Confirm Password</label>
+                                <input type="password" name="cPassword" placeholder="Confirm Password" class="form-control" ng-model="cPassword" ng-minlength="8" required ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/">
+                                <p ng-show="changePasswordForm.cPassword.$error.pattern" class="help-block">Password should be atleast 8 characters long and should contain one number,one character and one special character.</p>
+                                <p ng-show="changePasswordForm.cPassword.$viewValue != changePasswordForm.nPassword.$viewValue" class="help-block has-error">Password doesn't match.</p>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-default" ng-disabled="changePasswordForm.$invalid || (changePasswordForm.cPassword.$viewValue !== changePasswordForm.nPassword.$viewValue)">Change Password <i class="fa fa-cog fa-spin" ng-if="isBusy"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
